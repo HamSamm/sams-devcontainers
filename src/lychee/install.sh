@@ -1,6 +1,13 @@
 #!/bin/sh
 set -e
 
+echo "Installing dependencies..."
+if [ -x "$(command -v apt-get)" ]; then
+    apt-get update && apt-get install -y curl ca-certificates tar
+elif [ -x "$(command -v apk)" ]; then
+    apk add --no-cache curl ca-certificates tar
+fi
+
 # Get version from options (defined in devcontainer-feature.json)
 VERSION=${VERSION:-"latest"}
 
