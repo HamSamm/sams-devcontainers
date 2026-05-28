@@ -27,8 +27,16 @@ else
 fi
 
 echo "Downloading Lychee from ${URL}..."
-curl -sSL "${URL}" | tar -xz
-mv lychee /usr/local/bin/
+# Use a temporary directory for safer extraction
+TMP_DIR=$(mktemp -d)
+# Extract the archive into the temporary directory
+curl -sSL "${URL}" | tar -xz -C "${TMP_DIR}"
+
+# Move the binary to the final destination and ensure it's executable
+mv "${TMP_DIR}/lychee" /usr/local/bin/
 chmod +x /usr/local/bin/lychee
+
+# Clean up the temporary directory
+rm -rf "${TMP_DIR}"
 
 echo "Lychee $(lychee --version) installed!"
