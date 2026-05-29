@@ -1,6 +1,6 @@
 {
   "id": "lychee",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "name": "Lychee Link Checker",
   "description": "Fast, async, stream-based link checker written in Rust.",
   "options": {
