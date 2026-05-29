@@ -16,32 +16,28 @@ case ${architecture} in
 esac
 
 VERSION=${VERSION:-"latest"}
+
 if [ "${VERSION}" = "latest" ]; then
-    URL="https://github.com/lycheeverse/lychee/releases/latest/download/lychee-${arch}-unknown-linux-gnu.tar.gz"
-else
-    URL="https://github.com/lycheeverse/lychee/releases/download/${VERSION}/lychee-${arch}-unknown-linux-gnu.tar.gz"
+    # This finds the redirect URL and extracts the tag (e.g., v0.15.1)
+    VERSION=$(curl -sI https://github.com/lycheeverse/lychee/releases/latest | grep -i location | sed 's/.*\/tag\/\(.*\)/\1/' | tr -d '\r')
 fi
 
-echo "Downloading Lychee from ${URL}..."
+URL="https://github.com/lycheeverse/lychee/releases/download/${VERSION}/lychee-${VERSION}-${arch}-unknown-linux-gnu.tar.gz"
+
+echo "Downloading Lychee ${VERSION} from ${URL}..."
 
 TMP_DIR=$(mktemp -d)
-
 curl -sSLf "${URL}" | tar -xz -C "${TMP_DIR}"
 
-BIN_PATH=$(find "${TMP_DIR}" -name "lychee" -type f | head -n 1)
+BIN_PATH=$(find "${TMP_DIR}" -name "lychee" -type f -executable | head -n 1)
 
 if [ -n "${BIN_PATH}" ]; then
-    echo "Found binary at ${BIN_PATH}, moving to /usr/local/bin"
     mv "${BIN_PATH}" /usr/local/bin/lychee
     chmod +x /usr/local/bin/lychee
 else
-    echo "ERROR: Could not find lychee binary in the downloaded archive."
-    # List files to debug if it fails again
-    ls -R "${TMP_DIR}"
+    echo "ERROR: Could not find lychee binary in archive"
     exit 1
 fi
 
 rm -rf "${TMP_DIR}"
-echo "Verifying installation..."
 /usr/local/bin/lychee --version
-echo "Lychee installation complete!"
