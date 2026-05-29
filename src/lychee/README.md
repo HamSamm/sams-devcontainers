@@ -15,7 +15,7 @@ Fast, async, stream-based link checker written in Rust.
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-| version | Version of lychee to install (e.g., v0.15.1) | string | latest |
+| version | Version of lychee to install | string | latest |
 
 
 
