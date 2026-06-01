@@ -11,11 +11,7 @@ Fast, async, stream-based link checker written in Rust.
 }
 ```
 
-## Options
 
-| Options Id | Description | Type | Default Value |
-|-----|-----|-----|-----|
-| version | Version of lychee to install | string | latest |
 
 
 
