@@ -1,13 +1,9 @@
 {
   "id": "lychee",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "name": "Lychee Link Checker",
   "description": "Fast, async, stream-based link checker written in Rust.",
-  "options": {
-    "version": {
-      "type": "string",
-      "default": "latest",
-      "description": "Version of lychee to install (e.g., v0.15.1)"
-    }
-  }
+  "installsAfter": [
+      "ghcr.io/devcontainers/features/common-utils"
+  ]
 }
